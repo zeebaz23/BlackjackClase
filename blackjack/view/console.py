@@ -38,6 +38,7 @@ class UIConsola:
                 print(f"{opcion} no es una opción válida")
 
     def iniciar_nuevo_juego(self):
+        print(f"\nTienes {self.blackjack.jugador.fichas} fichas.")  # Mostrar fichas del jugador antes de empezar
         apuesta: int = self.pedir_apuesta()
         self.blackjack.iniciar_juego(apuesta)
         self.mostrar_manos(self.blackjack.cupier.mano, self.blackjack.jugador.mano)
@@ -46,6 +47,8 @@ class UIConsola:
             self.hacer_jugada_del_jugador()
         else:
             print(f"FELICITACIONES, LOGRASTE BLACKJACK. HAS GANADO EL JUEGO")
+            self.blackjack.jugador.agregar_fichas(self.blackjack.apuesta_actual)
+            print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  # Mostrar fichas después de ganar
 
     def hacer_jugada_del_jugador(self):
         while not self.blackjack.jugador_perdio():
@@ -58,11 +61,29 @@ class UIConsola:
 
         if self.blackjack.jugador_perdio():
             print("\nHAS PERDIDO EL JUEGO")
+            self.blackjack.jugador.agregar_fichas(-self.blackjack.apuesta_actual)
+            print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  # Mostrar fichas después de perder
         else:
             self.ejecutar_turno_de_la_casa()
 
     def ejecutar_turno_de_la_casa(self):
-        pass
+        self.blackjack.destapar_mano_de_la_casa()
+        self.mostrar_manos(self.blackjack.cupier.mano, self.blackjack.jugador.mano)
+
+        while self.blackjack.casa_puede_pedir():
+            self.blackjack.repartir_carta_a_la_casa()
+            self.mostrar_manos(self.blackjack.cupier.mano, self.blackjack.jugador.mano)
+
+        if self.blackjack.jugador_gano():
+            print("\n¡FELICITACIONES! GANASTE LA PARTIDA.")
+            self.blackjack.jugador.agregar_fichas(self.blackjack.apuesta_actual)
+        elif self.blackjack.casa_gano():
+            print("\nLA CASA HA GANADO. HAS PERDIDO LA PARTIDA.")
+            self.blackjack.jugador.agregar_fichas(-self.blackjack.apuesta_actual)
+        elif self.blackjack.hay_empate():
+            print("\nES UN EMPATE.")
+
+        print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  # Mostrar fichas al final de la partida
 
     def pedir_apuesta(self):
         apuesta: int = int(input("¿Cuál es su apuesta?: "))
@@ -83,6 +104,3 @@ class UIConsola:
     def salir():
         print("\nGRACIAS POR JUGAR BLACKJACK. VUELVA PRONTO")
         sys.exit(0)
-
-
-
