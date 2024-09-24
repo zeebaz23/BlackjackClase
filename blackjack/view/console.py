@@ -83,7 +83,7 @@ class UIConsola:
         elif self.blackjack.hay_empate():
             print("\nES UN EMPATE.")
 
-        print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  # Mostrar fichas al final de la partida
+        print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  
 
     def pedir_apuesta(self):
         apuesta: int = int(input("¿Cuál es su apuesta?: "))
