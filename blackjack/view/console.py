@@ -38,7 +38,7 @@ class UIConsola:
                 print(f"{opcion} no es una opción válida")
 
     def iniciar_nuevo_juego(self):
-        print(f"\nTienes {self.blackjack.jugador.fichas} fichas.")  # Mostrar fichas del jugador antes de empezar
+        print(f"\nTienes {self.blackjack.jugador.fichas} fichas.") 
         apuesta: int = self.pedir_apuesta()
         self.blackjack.iniciar_juego(apuesta)
         self.mostrar_manos(self.blackjack.cupier.mano, self.blackjack.jugador.mano)
@@ -48,7 +48,7 @@ class UIConsola:
         else:
             print(f"FELICITACIONES, LOGRASTE BLACKJACK. HAS GANADO EL JUEGO")
             self.blackjack.jugador.agregar_fichas(self.blackjack.apuesta_actual)
-            print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  # Mostrar fichas después de ganar
+            print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  
 
     def hacer_jugada_del_jugador(self):
         while not self.blackjack.jugador_perdio():
@@ -62,7 +62,7 @@ class UIConsola:
         if self.blackjack.jugador_perdio():
             print("\nHAS PERDIDO EL JUEGO")
             self.blackjack.jugador.agregar_fichas(-self.blackjack.apuesta_actual)
-            print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  # Mostrar fichas después de perder
+            print(f"Tienes {self.blackjack.jugador.fichas} fichas.")  
         else:
             self.ejecutar_turno_de_la_casa()
 
